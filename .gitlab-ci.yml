@@ -1,3 +1,10 @@
+stages:
+    - test
+
+test:
+    stage: test
+    script:
+        - echo "Hello World"
 # stages:
 #     - build
 #     - deploy
