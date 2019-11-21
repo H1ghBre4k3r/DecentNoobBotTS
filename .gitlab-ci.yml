@@ -1,0 +1,24 @@
+# stages:
+#     - build
+#     - deploy
+
+# build:
+#     stage: build
+#     script:
+#         - npm install
+#         - npm run build
+#         - echo $SECRET_JSON >> ./build/config/secret.json
+#     artifacts:
+#         paths:
+#             - ./*
+
+# deploy:
+#     only:
+#         - production
+#     stage: deploy
+#     script:
+#         - cp package.json /usr/local/node/DecentNoobBotRedux/
+#         - cp -r build /usr/local/node/DecentNoobBotRedux/
+#         - cp -r node_modules /usr/local/node/DecentNoobBotRedux/
+#         # - pm2 restart DecentNoobBot
+#     environment: production

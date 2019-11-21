@@ -1,0 +1,26 @@
+{
+    "name": "decentnoobbotredux",
+    "version": "1.1.2",
+    "description": "This is my typescript + redux version of the DecentNoobBot.",
+    "main": "build/index.js",
+    "scripts": {
+        "build": "tsc",
+        "test": "ts-node ./src/index.ts",
+        "dev": "ts-node-dev ./src/index.ts",
+        "start": "node ./build/app.js",
+        "build:start": "npm run build && npm run start"
+    },
+    "author": "Louis Meyer",
+    "license": "ISC",
+    "dependencies": {
+        "discord.js": "^11.4.2",
+        "request": "^2.88.0"
+    },
+    "devDependencies": {
+        "@types/node": "^11.12.2",
+        "@types/request": "^2.48.1",
+        "ts-node": "^8.0.3",
+        "ts-node-dev": "^1.0.0-pre.32",
+        "typescript": "^3.4.1"
+    }
+}
