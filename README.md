@@ -1,4 +1,4 @@
-# DecentNoobBotRedux
+# DecentNoobBot
 
 [![pipeline status](https://git.bre4k3r.de/h1ghbre4k3r/decentnoobbotredux/badges/master/pipeline.svg)](https://git.bre4k3r.de/h1ghbre4k3r/decentnoobbotredux/commits/master)
 
