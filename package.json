@@ -5,10 +5,13 @@
     "main": "build/index.js",
     "scripts": {
         "build": "tsc",
-        "test": "ts-node ./src/index.ts",
+        "start": "node .",
         "dev": "ts-node-dev ./src/index.ts",
-        "start": "node ./build/app.js",
-        "build:start": "npm run build && npm run start"
+        "build:start": "npm run build && npm run start",
+        "docker:build": "docker-compose -f docker/docker-compose.yml build",
+        "docker:deploy": "docker-compose -f docker/docker-compose.yml up -d",
+        "docker": "npm run docker:build && npm run docker:deploy",
+        "deploy": "npm run build && npm run docker"
     },
     "author": "Louis Meyer",
     "license": "ISC",
