@@ -1,6 +1,6 @@
 # DecentNoobBot
 
-[![pipeline status](https://git.bre4k3r.de/h1ghbre4k3r/decentnoobbotredux/badges/master/pipeline.svg)](https://git.bre4k3r.de/h1ghbre4k3r/decentnoobbotredux/commits/master)
+[![pipeline status](https://git.bre4k3r.de/dev-bre4k3r/decentnoobbot/badges/master/pipeline.svg)](https://git.bre4k3r.de/dev-bre4k3r/decentnoobbot/commits/master)
 
 Just a simple Discord-Bot written in TypeScript, running on NodeJS.
 
