@@ -22,8 +22,8 @@ node:install:
 build:
     stage: build
     script:
-        - mkdir src/app/config
-        - echo $SECRET_JSON >> src/app/config/secret.ts
+        # - mkdir src/app/config
+        # - echo $SECRET_JSON >> src/app/config/secret.ts
         - npm run build
     cache:
         key: $CI_COMMIT_REF_SLUG

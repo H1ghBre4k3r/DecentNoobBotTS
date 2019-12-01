@@ -1,7 +1,8 @@
 import * as Discord from "discord.js";
 import $ from "./../util/logger";
 
-import config from "./config/secret";
+const BOT_TOKEN = process.env.BOT_TOKEN;
+
 import CommandHandler from "./commands/commandHandler";
 
 export class Bot extends Discord.Client {
@@ -11,7 +12,7 @@ export class Bot extends Discord.Client {
     constructor(options?: Discord.ClientOptions) {
         super(options);
         this.bind();
-        this.login(config.token);
+        this.login(BOT_TOKEN);
     }
 
     /**

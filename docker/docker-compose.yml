@@ -5,6 +5,8 @@ services:
         build: ../
         depends_on:
             - dnb_db
+        environment:
+            - BOT_TOKEN
     dnb_db:
         image: mongo
         # ports:

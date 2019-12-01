@@ -1,5 +1,7 @@
 FROM node:13.1
 
+ENV BOT_TOKEN ${BOT_TOKEN}
+
 WORKDIR /app
 
 COPY ./build/ /app/
