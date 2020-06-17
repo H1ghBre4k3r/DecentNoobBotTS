@@ -1,6 +1,7 @@
 import { Singleton } from "dependory";
 import { Sequelize, STRING, BOOLEAN } from "sequelize";
 import { CIUserInformation } from "../git/gitCiManager";
+import { TwitchCommandInfo } from "../twitch/events/twitchMessageHandler";
 import { EventQueue } from "../utils/eventQueue";
 
 export interface CommandInfo {
@@ -9,6 +10,9 @@ export interface CommandInfo {
     channels: string[];
 }
 
+/**
+ * Class for managing database actions.
+ */
 @Singleton()
 export class Database {
     private sequelize: Sequelize;
@@ -16,6 +20,7 @@ export class Database {
     private commands!: any;
     private roles!: any;
     private ciUsers!: any;
+    private twitchCommands!: any;
 
     private queue: EventQueue;
 
@@ -59,6 +64,15 @@ export class Database {
             },
             token: STRING
         });
+
+        this.twitchCommands = this.sequelize.define("twitch-commands", {
+            channel: STRING,
+            command: STRING,
+            alias: BOOLEAN,
+            value: STRING
+        });
+
+        // !add-com -a !twitch !stream
     }
 
     /**
@@ -206,7 +220,7 @@ export class Database {
     }
 
     /**
-     *
+     * TODO
      * @param user
      * @param token
      */
@@ -218,6 +232,107 @@ export class Database {
                         ciUser.update({ user, token }).then(resolve);
                     }
                 });
+            });
+        });
+    }
+
+    /**
+     * Add a twitch command to the database. If it already exists, update its values.
+     * @param channel channel this command is in
+     * @param command name of the command
+     * @param value value of the command
+     * @param alias flag for being an alias
+     */
+    public async addTwitchCommand(channel: string, command: string, value: string, alias = false): Promise<void> {
+        return new Promise(resolve => {
+            this.queue.push(async () => {
+                const [cmd] = await this.twitchCommands.findAll({
+                    where: {
+                        channel,
+                        command
+                    }
+                });
+                if (cmd) {
+                    await cmd
+                        .update({
+                            channel,
+                            command,
+                            value,
+                            alias
+                        })
+                        .then(resolve);
+                } else {
+                    await this.twitchCommands
+                        .create({
+                            channel,
+                            command,
+                            value,
+                            alias
+                        })
+                        .then(resolve);
+                }
+            });
+        });
+    }
+
+    /**
+     * Get command information from the database.
+     * @param channel channel for the comamnd
+     * @param command name of the command
+     */
+    public async getTwitchCommand(channel: string, command: string): Promise<TwitchCommandInfo | undefined> {
+        return new Promise(resolve => {
+            this.queue.push(async () => {
+                const [cmd] = await this.twitchCommands.findAll({
+                    where: {
+                        channel,
+                        command
+                    }
+                });
+                resolve(cmd);
+            });
+        });
+    }
+
+    /**
+     * Get all aliases for a command.
+     * @param channel channel to get the alaises for
+     * @param command name of the command to get the aliases for
+     */
+    public async getAliases(channel: string, command: string): Promise<TwitchCommandInfo[]> {
+        return new Promise(resolve => {
+            this.queue.push(async () => {
+                const cmds = await this.twitchCommands.findAll({
+                    where: {
+                        channel,
+                        alias: true,
+                        value: command
+                    }
+                });
+                resolve(cmds);
+            });
+        });
+    }
+
+    /**
+     * Delete a comamnd from the database.
+     * @param channel channel this command is in
+     * @param command name of the command
+     */
+    public async deleteTwitchCommand(channel: string, command: string): Promise<boolean> {
+        return new Promise(resolve => {
+            this.queue.push(async () => {
+                const [cmd] = await this.twitchCommands.findAll({
+                    where: {
+                        channel,
+                        command
+                    }
+                });
+                if (cmd) {
+                    await cmd.destroy();
+                    resolve(true);
+                }
+                resolve(false);
             });
         });
     }
