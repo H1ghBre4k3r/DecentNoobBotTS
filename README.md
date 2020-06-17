@@ -4,6 +4,8 @@
 
 Just a simple Discord-Bot written in TypeScript, running on NodeJS.
 
+It uses a modular, event-based component system, which allows the possibility of adding new features and modules later on.
+
 ## System Dependencies
 
 -   NodeJS
@@ -15,39 +17,29 @@ Just a simple Discord-Bot written in TypeScript, running on NodeJS.
 **Via Terminal:**
 
 ```sh
-# Node.js v11.x
+# Node.js v13.x
 
 # Using Ubuntu
-curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
 # Using Debian, as root
-curl -sL https://deb.nodesource.com/setup_11.x | bash -
-apt-get install -y nodejs
-
-# Node.js v12.x
-
-# Using Ubuntu
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-# Using Debian, as root
-curl -sL https://deb.nodesource.com/setup_12.x | bash -
+curl -sL https://deb.nodesource.com/setup_13.x | bash -
 apt-get install -y nodejs
 ```
 
 ### Installation on macOS
 
+**Via [Homebrew](https://brew.sh/index_de) (recommended):**
+
+```sh
+brew install node
+```
+
 **Via terminal:**
 
 ```sh
 curl "https://nodejs.org/dist/latest/node-${VERSION:-$(wget -qO- https://nodejs.org/dist/latest/ | sed -nE 's|.*>node-(.*)\.pkg</a>.*|\1|p')}.pkg" > "$HOME/Downloads/node-latest.pkg" && sudo installer -store -pkg "$HOME/Downloads/node-latest.pkg" -target "/"
-```
-
-**Via Homebrew:**
-
-```sh
-brew install node
 ```
 
 ### Installation on Windows
@@ -62,23 +54,18 @@ https://nodejs.org/en/#download
 
 ### Required
 
--   Create a file named `secret.json` in `src/config` containing the following information:
+-   Create a file named `.env` in the root folder of the project containing the following information:
 
-```json
-{
-    "bot_token": "YOUR_DISCORD_API_BOT_TOKEN",
-    "api_token": "YOUR_DATABASE_API_TOKEN",
-    "api": "YOUR_API_URL"
-}
+```env
+BOT_TOKEN=<YOUR_BOT_TOKEN>
+API_URL=<BASE_URL_OF_API>
+AUTH_TOKEN=<TOKEN_FOR_THE_API>
 ```
-
--   Edit the file `src/config/config.json` so it contains the wanted information.
 
 -   Run the following command in the root-directory of the repository:
 
 ```sh
-# This will install all needed dependencies
-npm install
+npm install # install all needed dependencies
 ```
 
 ## Commands
@@ -87,15 +74,10 @@ npm install
 
 -   `npm run build`
 
-#### Testing
-
--   `npm run dev` (starts bot via `ts-node-dev` - like `ts-node`, but it refreshes everytime you change a file)
--   `npm run test` (starts bot via `ts-node`)
-
 #### Running (need to run `npm run build` first)
 
 -   `npm start run`
 
 #### Build & start
 
--   `npm run prod`
+-   `npm run build:start`
