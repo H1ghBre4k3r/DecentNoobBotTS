@@ -35,7 +35,7 @@ export class GitWebhookManager extends EventEmitter {
         this.server.use(bodyParser.json());
         this.bind();
         this.server.listen(GitWebhookManager.PORT, () => {
-            $.success(`Server listeing on port ${GitWebhookManager.PORT}!`);
+            $.success(`Server listening on port ${GitWebhookManager.PORT}!`);
         });
     }
 

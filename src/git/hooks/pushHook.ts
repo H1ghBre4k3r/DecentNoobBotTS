@@ -2,7 +2,7 @@ import { Singleton, Inject } from "dependory";
 import { EmbedFieldData, MessageEmbed } from "discord.js";
 import express from "express";
 import { ExtendedRestClient } from "../../api/restClient";
-import { Bot } from "../../bot/bot";
+import { DiscordClient } from "../../discord/discordClient";
 import { GitlabEventExecutor, GitWebhookManager } from "../gitWebhookManager";
 
 /**
@@ -69,7 +69,7 @@ export class PushHook implements GitlabEventExecutor {
     public evt = "Push Hook";
 
     @Inject()
-    private bot!: Bot;
+    private bot!: DiscordClient;
 
     @Inject()
     private gitWebhookManager!: GitWebhookManager;
