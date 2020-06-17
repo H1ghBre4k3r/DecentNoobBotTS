@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+    bot:
+        build: ../
+        restart: always
+        environment:
+            - BOT_TOKEN
+            - API_URL
+            - AUTH_TOKEN
+        ports:
+            - "4848:4848"
+        volumes:
+            - db-data:/app/storage
+
+volumes:
+    db-data:

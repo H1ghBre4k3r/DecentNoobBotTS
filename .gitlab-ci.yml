@@ -3,7 +3,7 @@ image: node:13.1
 stages:
     - setup
     - build
-    - test
+    # - test
     - deploy
 
 node:install:
@@ -22,8 +22,6 @@ node:install:
 build:
     stage: build
     script:
-        # - mkdir src/app/config
-        # - echo $SECRET_JSON >> src/app/config/secret.ts
         - npm run build
     cache:
         key: $CI_COMMIT_REF_SLUG
@@ -34,25 +32,57 @@ build:
         paths:
             - build/
 
-test:
-    image: docker:19.03.1
-    stage: test
+# test:
+#     image: docker:19.03.1
+#     stage: test
+#     script:
+#         - docker ps -a
+#     cache:
+#         key: $CI_COMMIT_REF_SLUG
+#         paths:
+#             - node_modules/
+#         policy: pull-push
+
+docker:dev:deploy:
+    except:
+        - master
+    image:
+        name: docker/compose:1.24.1
+        entrypoint: ["/bin/sh", "-c"]
+    stage: deploy
     script:
-        - docker ps -a
+        - docker-compose -f dnb_docker/docker-compose.dev.yml build
+        - docker-compose -f dnb_docker/docker-compose.dev.yml up -d
     cache:
         key: $CI_COMMIT_REF_SLUG
         paths:
             - node_modules/
         policy: pull-push
 
-docker:deploy:
+docker:dev:stop:
+    when: manual
     image:
         name: docker/compose:1.24.1
         entrypoint: ["/bin/sh", "-c"]
     stage: deploy
     script:
-        - docker-compose -f docker/docker-compose.yml build
-        - docker-compose -f docker/docker-compose.yml up -d
+        - docker-compose -f dnb_docker/docker-compose.dev.yml down
+    cache:
+        key: $CI_COMMIT_REF_SLUG
+        paths:
+            - node_modules/
+        policy: pull-push
+
+docker:production:deploy:
+    only:
+        - master
+    image:
+        name: docker/compose:1.24.1
+        entrypoint: ["/bin/sh", "-c"]
+    stage: deploy
+    script:
+        - docker-compose -f dnb_docker/docker-compose.yml build
+        - docker-compose -f dnb_docker/docker-compose.yml up -d
     cache:
         key: $CI_COMMIT_REF_SLUG
         paths:

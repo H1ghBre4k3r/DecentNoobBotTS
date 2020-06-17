@@ -1,12 +1,12 @@
-FROM node:13.1
-
-ENV BOT_TOKEN ${BOT_TOKEN}
+FROM node:alpine
 
 WORKDIR /app
 
 COPY ./build/ /app/
 COPY ./node_modules /app/node_modules
 
+RUN mkdir /app/storage
+
 # CMD ["node", ""]
 
-ENTRYPOINT ["node", "/app/index.js"]%
+ENTRYPOINT ["node", "/app/index.js"]
