@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 import fs from "fs";
 import { join } from "path";
-import $ from "logsen";
 
 dotenv.config();
 
@@ -13,7 +12,6 @@ dotenv.config();
  * Initialize everything.
  */
 async function init(): Promise<void> {
-    $.setTimestamp($.defaultTimestamp);
     await readDirectory(__dirname);
 }
 
