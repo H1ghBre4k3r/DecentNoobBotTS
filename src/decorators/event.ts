@@ -1,4 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { defaultRegistry, Registry } from "dependory";
+import { ClazzWrapper } from "../api/clazzWrapper";
 
 export interface EventFunctionObject {
     event: string;
@@ -7,11 +11,10 @@ export interface EventFunctionObject {
 }
 
 /**
- * Register a function for a specific event on another object. The instance of the class will be pulled from the default registry.
+ * Register a function for a specific event on another class. The instance of the class will be pulled from the default registry.
  * Therefore be aware of not using this for transients.
  */
-export function Event(event: string, eventer: any): any {
-    // tslint:disable-next-line: only-arrow-functions
+export function Event(event: string, eventer: ClazzWrapper): any {
     return (clazz: any, _functionName: any, propDesc: PropertyDescriptor): PropertyDescriptor => {
         clazz.__dnbEventFunctions = clazz.__dnbEventFunctions ?? [];
 
