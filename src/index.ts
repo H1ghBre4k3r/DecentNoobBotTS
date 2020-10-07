@@ -1,12 +1,12 @@
-import dotenv from "dotenv";
 import fs from "fs";
 import { join } from "path";
+import dotenv from "dotenv";
 import $ from "logsen";
 
 dotenv.config();
 
-(async () => {
-    init();
+void (async () => {
+    await init();
 })();
 
 /**
@@ -19,6 +19,7 @@ async function init(): Promise<void> {
 
 /**
  * Read a directory recursively and import all files in there.
+ *
  * @param dir
  */
 async function readDirectory(dir: string): Promise<void> {
@@ -36,5 +37,5 @@ async function readDirectory(dir: string): Promise<void> {
             promises.push(readDirectory(join(dir, p.name)));
         }
     }
-    Promise.all(promises);
+    await Promise.all(promises);
 }

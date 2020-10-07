@@ -6,27 +6,9 @@ const { BOT_TOKEN } = process.env;
 
 @Singleton()
 export class DiscordClient extends Client {
-    constructor() {
+    public constructor() {
         super({});
         this.init();
-    }
-
-    /**
-     * Initialize the bot.
-     */
-    private init(): void {
-        this.login(BOT_TOKEN)
-            .then(() => {
-                $.success("Successfully connected to discord API!");
-                this.setActivity({
-                    type: "PLAYING",
-                    name: "Fun Stuff!"
-                });
-            })
-            .catch(err => {
-                $.err("Failed to connect to discord API!", err);
-                process.exit(1);
-            });
     }
 
     /**
@@ -45,5 +27,23 @@ export class DiscordClient extends Client {
      */
     public async setActivity(options: ActivityOptions): Promise<void> {
         await this.user?.setActivity(options);
+    }
+
+    /**
+     * Initialize the bot.
+     */
+    private init(): void {
+        this.login(BOT_TOKEN)
+            .then(() => {
+                $.success("Successfully connected to discord API!");
+                void this.setActivity({
+                    type: "PLAYING",
+                    name: "Fun Stuff!"
+                });
+            })
+            .catch(err => {
+                $.err("Failed to connect to discord API!", err);
+                process.exit(1);
+            });
     }
 }

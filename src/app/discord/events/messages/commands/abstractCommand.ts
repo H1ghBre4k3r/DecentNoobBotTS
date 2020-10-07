@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Inject } from "dependory";
 import { EmbedFieldData, Message } from "discord.js";
 import { Eventer } from "../../../../../utils/eventer";

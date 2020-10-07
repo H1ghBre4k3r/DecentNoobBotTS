@@ -15,14 +15,15 @@ export class MessageManager {
     @Inject()
     private eventBus!: Eventer;
 
-    private commands: Map<string, AbstractCommand> = new Map();
+    private commands: Map<string, AbstractCommand> = new Map<string, AbstractCommand>();
 
     /**
      * Handle an incomming message.
+     *
      * @param message message to handle
      */
     @Event("message", DiscordClient)
-    public async onMessage(message: Message): Promise<void> {
+    public onMessage(message: Message): void {
         if (!message.author.bot) {
             const args = message.content.split(/ +/);
             this.emit(args[0], message);

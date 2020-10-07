@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { PermissionString, Message } from "discord.js";
 import { AbstractCommand } from "../events/messages/commands/abstractCommand";
 
@@ -11,7 +13,7 @@ export function Permission(
 ): (target: any, key: string | symbol, descriptor: PropertyDescriptor) => PropertyDescriptor {
     // tslint:disable-next-line:only-arrow-functions
     return function (target: AbstractCommand, _key: string | symbol, run: PropertyDescriptor): PropertyDescriptor {
-        const cmd = run.value;
+        const cmd: (...args: any) => void = run.value;
         target.restricted = true;
         run.value = async function (msg: Message): Promise<void> {
             // Check, if caller has a certain permission and execute function if so

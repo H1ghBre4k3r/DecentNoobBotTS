@@ -10,11 +10,11 @@ export class Say extends AbstractCommand {
         const args: string[] = msg.content.split(/ +/);
 
         if (!args[1]) {
-            msg.reply("please provide a message to send!");
+            await msg.reply("please provide a message to send!");
             return;
         }
-        msg.delete().catch();
-        msg.channel.send(args.slice(1).join(" "));
+        await msg.delete().catch();
+        await msg.channel.send(args.slice(1).join(" "));
     }
 
     public get help(): EmbedFieldData {

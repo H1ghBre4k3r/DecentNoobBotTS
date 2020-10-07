@@ -5,13 +5,13 @@ import { AbstractCommand } from "./abstractCommand";
 
 @Command("!ping")
 export class Ping extends AbstractCommand {
-    constructor() {
+    public constructor() {
         super();
     }
 
     @Permission("ADMINISTRATOR")
     public async run(msg: Message): Promise<void> {
-        msg.channel.send("Pongy pong pong!");
+        await msg.channel.send("Pongy pong pong!");
     }
 
     public get help(): EmbedFieldData {

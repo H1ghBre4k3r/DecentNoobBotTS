@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Transient } from "dependory";
 
 type EventObject = () => Promise<void>;
@@ -6,7 +7,7 @@ type EventObject = () => Promise<void>;
 export class EventQueue {
     private _queue: EventObject[];
 
-    constructor() {
+    public constructor() {
         this._queue = [];
         setTimeout(this.loop.bind(this), 0);
     }

@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+// TODO: Type everything properly
 import { Message } from "discord.js";
 import { AbstractCommand } from "../events/messages/commands/abstractCommand";
 import { ChannelType } from "../events/messages/messageManager";
@@ -11,11 +17,11 @@ export function Channel(
     channel: ChannelType
 ): (target: AbstractCommand, key: string | symbol, descriptor: PropertyDescriptor) => PropertyDescriptor {
     // tslint:disable-next-line:only-arrow-functions
-    return function(target: AbstractCommand, _key: string | symbol, run: any): PropertyDescriptor {
-        const cmd = run.value;
+    return function (target: AbstractCommand, _key: string | symbol, run: any): PropertyDescriptor {
+        const cmd: (...args: any[]) => void = run.value;
 
         // Push channeltype to allowed channels for function
-        const ch = run.channel ?? [];
+        const ch: ChannelType[] = run.channel ?? [];
         ch.push(channel);
         run.channel = ch;
 
@@ -26,7 +32,7 @@ export function Channel(
         }
         target.channel = targetChannel;
 
-        run.value = async function(msg: Message): Promise<void> {
+        run.value = async function (msg: Message): Promise<void> {
             // Check, if current channel type is allowed
             if (!run.channel?.includes(msg.channel.type)) {
                 return;
