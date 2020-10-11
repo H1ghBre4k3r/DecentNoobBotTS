@@ -43,6 +43,7 @@ export class DiscordClient extends Client {
                     name: "Fun Stuff!"
                 });
 
+                // TODO: Somehow fix this:
                 // Somehow we cannot fetch all guilds manually. Don't ask me why. DiscordJS ist merkwürdig.
                 // this.guilds.cache.array().forEach(async g => {
                 //     await g.fetch();
