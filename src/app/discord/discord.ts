@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Singleton } from "dependory";
-import { Client, ClientEvents, ActivityOptions } from "discord.js";
+import { Client, ClientEvents, ActivityOptions, TextChannel } from "discord.js";
 import $ from "logsen";
 
 const { BOT_TOKEN } = process.env;
@@ -39,6 +40,20 @@ export class DiscordClient extends Client {
                 void this.setActivity({
                     type: "PLAYING",
                     name: "Fun Stuff!"
+                });
+                this.guilds.cache.array().forEach(async g => {
+                    try {
+                        await g.fetch();
+                        this.channels.cache.array().forEach(async c => {
+                            await c.fetch();
+                            if (c instanceof TextChannel) {
+                                await c.messages.fetch();
+                                console.log(c.name, c.messages.cache.array().length);
+                            }
+                        });
+                    } catch {
+                        // leave empty, since eslint doesnt like it
+                    }
                 });
             })
             .catch(err => {
